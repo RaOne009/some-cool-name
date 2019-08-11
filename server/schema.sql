@@ -1,0 +1,34 @@
+DROP TABLE IF EXISTS student;
+DROP TABLE IF EXISTS admin;
+DROP TABLE IF EXISTS tests;
+DROP TABLE IF EXISTS question;
+
+CREATE TABLE IF NOT EXISTS students (
+	id INTEGER PRIMARY KEY AUTOINCREMENT,
+	name TEXT UNIQUE,
+	roll_number TEXT UNIQUE,
+	phone_number TEXT,
+	password TEXT UNIQUE
+);
+
+CREATE TABLE IF NOT EXISTS admins (
+	id INTEGER PRIMARY KEY AUTOINCREMENT,
+	name TEXT UNIQUE,
+	email_id TEXT UNIQUE,
+	password TEXT UNIQUE
+);
+
+CREATE TABLE IF NOT EXISTS tests (
+	id INTEGER PRIMARY KEY AUTOINCREMENT,
+	start_time DATETIME,
+	duration DATETIME,
+	author TEXT,
+	question_count INTEGER
+);
+
+CREATE TABLE IF NOT EXISTS questions (
+	id INTEGER,
+	test_id	TEXT,
+	solution TEXT,
+	FOREIGN KEY (test_id) REFERENCES "tests"(id)
+);
