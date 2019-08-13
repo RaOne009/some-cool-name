@@ -1,0 +1,14 @@
+{% extends "layout.html" %}
+
+{% block title %}Create test{% endblock %}
+
+{% block content %}
+	Please fill out the following data to create a test:<br>
+	
+	<form method = "POST">
+		Test name: <input type = "text" name = "name" required><br>
+		Start time: <input type = "datetime-local" name = "start_time" required><br>
+		Duration: <input type = "time" name = "duration" required><br>
+		<input type = "submit" value = "Create Test">
+	</form>
+{% endblock %}

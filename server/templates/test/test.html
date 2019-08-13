@@ -1,0 +1,25 @@
+{% extends "layout.html" %}
+
+{% block title %}{{ test["name"] }}{% endblock %}
+
+{% block content %}
+	<h3>Q. No {{ question_id }}</h3><br>
+	<form method = "POST">
+		Statement: <input type = "text" name = "statement" value = "{{ question['statement'] }}" required><br>
+		1) <input type = "text" name = "option_a" value = "{{ question['option_a'] }}" required><br>
+		2) <input type = "text" name = "option_b" value = "{{ question['option_b'] }}" required><br>
+		3) <input type = "text" name = "option_c" value = "{{ question['option_c'] }}" required><br>
+		4) <input type = "text" name = "option_d" value = "{{ question['option_d'] }}" required><br>
+		Correct option: <input type = "text" name = "correct_option" value = "{{ question['correct_option'] }}" required><br>
+		{% if question_id <= test["questions_count"] %}
+			<input type = "submit" value = "Edit"><br>
+		{% elif question_id == test["questions_count"] + 1 %}
+			<a href = "{{ url_for('test.test', test_id = test['id'], question_id = question_id + 1) }}">Create</a><br>
+		{% endif %}
+	</form>
+	{% if question_id <= test["questions_count"] %}
+		<a href = "{{ url_for('test.test', test_id = test['id'], question_id = question_id + 1) }}">Next Question</a><br>
+	{% elif question_id == test["questions_count"] + 1 %}
+		<a href = "{{ url_for('test.test', test_id = test['id'], question_id = question_id + 1) }}">Create Question</a><br>
+	{% endif %}
+{% endblock %}

@@ -14,6 +14,7 @@ def register():
 	else:
 		return render_template("auth/register.html")
 
+
 @bp.route("/register_student", methods = ("GET", "POST"))
 def register_student():
 	if request.method == "POST":
@@ -30,6 +31,7 @@ def register_student():
 			return redirect(url_for("index"))
 	else:
 		return render_template("auth/register_student.html")
+
 		
 @bp.route("/register_admin", methods = ("GET", "POST"))
 def register_admin():
@@ -47,6 +49,7 @@ def register_admin():
 	else:
 		return render_template("auth/register_admin.html")
 
+
 @bp.route("/login", methods = ("GET", "POST"))
 def login():
 	if request.method == "POST":
@@ -56,6 +59,7 @@ def login():
 			return redirect(url_for("auth.login_admin"))
 	else:
 		return render_template("auth/login.html")
+
 
 @bp.route("/login_student", methods = ("GET", "POST"))
 def login_student():
@@ -77,6 +81,7 @@ def login_student():
 	else:
 		return render_template("auth/login_student.html")
 
+
 @bp.route("/login_admin", methods = ("GET", "POST"))
 def login_admin():
 	if request.method == "POST":
@@ -94,6 +99,7 @@ def login_admin():
 			return redirect(url_for("index"))
 	else:
 		return render_template("auth/login_admin.html")
+
 
 @bp.route("/logout")
 def logout():

@@ -1,0 +1,19 @@
+{% extends "layout.html" %}
+
+{% block title %}Tests{% endblock %}
+
+{% block content %}
+	<h1>Tests</h1><br><br><br>
+	<ul>
+		{% for test in all_tests %}
+			{{ test.id }}<br>
+			{{ test.name }}<br>
+			{{ test.start_time }}<br>
+			{{ test.duration }}<br>
+			{{ test.questions_count }}<br>
+			<a href = "{{ url_for('test.edit_test', test_id = test.id) }}">Edit</a><br>
+			<a href = "{{ url_for('test.test', test_id = test.id, question_id = 1) }}">Enter</a><br>
+			<br><br>
+		{% endfor %}
+	</ul>
+{% endblock %}

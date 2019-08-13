@@ -20,15 +20,20 @@ CREATE TABLE IF NOT EXISTS admins (
 
 CREATE TABLE IF NOT EXISTS tests (
 	id INTEGER PRIMARY KEY AUTOINCREMENT,
+	name TEXT,
 	start_time DATETIME,
-	duration DATETIME,
-	author TEXT,
-	question_count INTEGER
+	duration TIME,
+	questions_count INTEGER DEFAULT 0
 );
 
 CREATE TABLE IF NOT EXISTS questions (
-	id INTEGER,
-	test_id	TEXT,
-	solution TEXT,
+	test_id	INTEGER,
+	question_id INTEGER,
+	statement TEXT,
+	option_a TEXT,
+	option_b TEXT,
+	option_c TEXT,
+	option_d TEXT,
+	correct_option TEXT,
 	FOREIGN KEY (test_id) REFERENCES "tests"(id)
 );
