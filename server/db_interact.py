@@ -62,3 +62,21 @@ def get_question(test_id, question_id):
 	db = get_db()
 	question = db.execute("SELECT * FROM questions WHERE test_id = ? AND question_id = ?", (test_id, question_id)).fetchone()
 	return question
+	
+	
+def add_question(test_id, question_id, statement, option_a, option_b, option_c, option_d, correct_option):
+	db = get_db()
+	db.execute("INSERT INTO questions(test_id, question_id, statement, option_a, option_b, option_c, option_d, correct_option) VALUES(?, ?, ?, ?, ?, ?, ?, ?)", (test_id, question_id, statement, option_a, option_b, option_c, option_d, correct_option))
+	db.commit()
+
+
+def update_question(test_id, question_id, statement, option_a, option_b, option_c, option_d, correct_option):
+	db = get_db()
+	db.execute("UPDATE questions SET statement = ?, option_a = ?, option_b = ?, option_c = ?, option_d = ? WHERE test_id = ? AND question_id = ?", (statement, option_a, option_b, option_c, option_d, test_id, question_id))
+	db.commit()
+
+	
+def update_questions_count(test_id, prv_count):
+	db = get_db()
+	db.execute("UPDATE tests SET questions_count = ? WHERE id = ?", (prv_count + 1, test_id))
+	db.commit()

@@ -12,14 +12,14 @@
 		4) <input type = "text" name = "option_d" value = "{{ question['option_d'] }}" required><br>
 		Correct option: <input type = "text" name = "correct_option" value = "{{ question['correct_option'] }}" required><br>
 		{% if question_id <= test["questions_count"] %}
-			<input type = "submit" value = "Edit"><br>
+			<a href = "{{ url_for('test.test', test_id = test['id'], question_id = question_id) }}"><input type = "submit" value = "Edit"></a><br>
 		{% elif question_id == test["questions_count"] + 1 %}
-			<a href = "{{ url_for('test.test', test_id = test['id'], question_id = question_id + 1) }}">Create</a><br>
+			<a href = "{{ url_for('test.test', test_id = test['id'], question_id = question_id) }}"><input type = "submit" value = "Create"></a><br>
 		{% endif %}
 	</form>
-	{% if question_id <= test["questions_count"] %}
+	{% if question_id < test["questions_count"] %}
 		<a href = "{{ url_for('test.test', test_id = test['id'], question_id = question_id + 1) }}">Next Question</a><br>
-	{% elif question_id == test["questions_count"] + 1 %}
+	{% elif question_id == test["questions_count"] %}
 		<a href = "{{ url_for('test.test', test_id = test['id'], question_id = question_id + 1) }}">Create Question</a><br>
 	{% endif %}
 {% endblock %}

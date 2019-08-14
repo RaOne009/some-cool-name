@@ -2,6 +2,7 @@ DROP TABLE IF EXISTS students;
 DROP TABLE IF EXISTS admins;
 DROP TABLE IF EXISTS tests;
 DROP TABLE IF EXISTS questions;
+DROP TABLE IF EXISTS results;
 
 CREATE TABLE IF NOT EXISTS students (
 	id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -36,4 +37,12 @@ CREATE TABLE IF NOT EXISTS questions (
 	option_d TEXT,
 	correct_option TEXT,
 	FOREIGN KEY (test_id) REFERENCES "tests"(id)
+);
+
+CREATE TABLE IF NOT EXISTS results (
+	test_id INTEGER,
+	student_id INTEGER,
+	score INTEGER,
+	FOREIGN KEY (test_id) REFERENCES "tests"(id),
+	FOREIGN KEY (student_id) REFERENCES "students"(id)
 );

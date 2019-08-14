@@ -36,11 +36,26 @@ def edit_test(test_id):
 		return render_template("test/edit_test.html", test = test)
 		
 
-@bp.route("/test/<int:test_id>/<int:question_id>", methods = ("GET", "POST"))
+@bp.route("/test/<int:test_id>/question/<int:question_id>", methods = ("GET", "POST"))
 def test(test_id, question_id):
 	question = get_question(test_id, question_id)
 	test = get_test(test_id)
+	is_new_question = (question_id == test["questions_count"] + 1)
+	print(is_new_question)
 	if request.method == "POST":
+		statement = request.form["statement"]
+		option_a = request.form["option_a"]
+		option_b = request.form["option_b"]
+		option_c = request.form["option_c"]
+		option_d = request.form["option_d"]
+		correct_option = request.form["correct_option"]
+		if is_new_question:
+			add_question(test_id, question_id, statement, option_a, option_b, option_c, option_d, correct_option)
+			update_questions_count(test_id, test["questions_count"])
+			print("Added question {} to test {}".format(question_id, test_id))
+		else:
+			update_question(test_id, question_id, statement, option_a, option_b, option_c, option_d, correct_option)
+			print("Updated question {} of test {}".format(question_id, test_id))
 		return redirect(url_for("test.test", test_id = test_id, question_id = question_id))
 	else:
 		return render_template("test/test.html", test = test, question = question, question_id = question_id)
