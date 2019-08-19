@@ -4,16 +4,22 @@
 
 {% block content %}
 	<h1>Tests</h1><br><br><br>
-	<ul>
+	<table>
+		<tr>
+		<th>Test Number</th>
+		<th>Test Name</th>
+		<th>Start Time</th>
+		<th>Duration</th>
+		</tr>
 		{% for test in all_tests %}
-			{{ test.id }}<br>
-			{{ test.name }}<br>
-			{{ test.start_time }}<br>
-			{{ test.duration }}<br>
-			{{ test.questions_count }}<br>
-			<a href = "{{ url_for('test.edit_test', test_id = test.id) }}">Edit</a><br>
-			<a href = "{{ url_for('test.test', test_id = test.id, question_id = 1) }}">Enter</a><br>
-			<br><br>
+			<tr>
+				<td>{{ test.id }}</td>
+				<td>{{ test.name }}</td>
+				<td>{{ test.start_time }}</td>
+				<td>{{ test.duration }}</td>
+				<td><a href = "{{ url_for('test.edit_test', test_id = test.id) }}">Edit</a></td>
+				<td><a href = "{{ url_for('test.test', test_id = test.id, question_id = 1) }}">Enter</a></td>
+			</tr>
 		{% endfor %}
-	</ul>
+	</table>
 {% endblock %}

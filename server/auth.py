@@ -74,6 +74,7 @@ def login_student():
 			session.clear()
 			session["type"] = "student"
 			session["name"] = user['name']
+			session["student_id"] = user["id"]
 			session["roll_number"] = user["roll_number"]
 			session["phone_number"] = user["phone_number"]
 			print("Student: {} logged in.".format(user["name"]))

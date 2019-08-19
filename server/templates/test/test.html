@@ -3,19 +3,31 @@
 {% block title %}{{ test["name"] }}{% endblock %}
 
 {% block content %}
-	<h3>Q. No {{ question_id }}</h3><br>
+	<center><h3>Q. {{ question_id }}</h3><br></center>
 	<form method = "POST">
-		Statement: <input type = "text" name = "statement" value = "{{ question['statement'] }}" required><br>
-		1) <input type = "text" name = "option_a" value = "{{ question['option_a'] }}" required><br>
-		2) <input type = "text" name = "option_b" value = "{{ question['option_b'] }}" required><br>
-		3) <input type = "text" name = "option_c" value = "{{ question['option_c'] }}" required><br>
-		4) <input type = "text" name = "option_d" value = "{{ question['option_d'] }}" required><br>
-		Correct option: <input type = "text" name = "correct_option" value = "{{ question['correct_option'] }}" required><br>
+		<i>Statement:</i> <textarea name = "statement" cols = "30" rows = "10">{{ question['statement'] }}</textarea>
+		
+		<i>Option A:</i> <input type = "text" name = "option_a" value = "{{ question['option_a'] }}" required><br>
+		<i>Option B:</i> <input type = "text" name = "option_b" value = "{{ question['option_b'] }}" required><br>
+		<i>Option C:</i> <input type = "text" name = "option_c" value = "{{ question['option_c'] }}" required><br>
+		<i>Option D:</i> <input type = "text" name = "option_d" value = "{{ question['option_d'] }}" required><br>
+		
+		<i>Correct option:</i><br>
+		{% for option in "ABCD" %}
+			{% if question["correct_option"] == option %}
+				<input type = "radio" name = "correct_option" value = "{{ option }}" checked required>{{ option }}<br>
+			{% else %}
+				<input type = "radio" name = "correct_option" value = "{{ option }}" required>{{ option }}<br>
+			{% endif %}
+		{% endfor %}
+		<br>
+		
 		{% if question_id <= test["questions_count"] %}
-			<a href = "{{ url_for('test.test', test_id = test['id'], question_id = question_id) }}"><input type = "submit" value = "Edit"></a><br>
+			<input type = "submit" value = "Edit">
 		{% elif question_id == test["questions_count"] + 1 %}
-			<a href = "{{ url_for('test.test', test_id = test['id'], question_id = question_id) }}"><input type = "submit" value = "Create"></a><br>
+			<input type = "submit" value = "Create">
 		{% endif %}
+		<br>
 	</form>
 	{% if question_id < test["questions_count"] %}
 		<a href = "{{ url_for('test.test', test_id = test['id'], question_id = question_id + 1) }}">Next Question</a><br>

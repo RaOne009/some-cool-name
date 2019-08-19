@@ -72,11 +72,29 @@ def add_question(test_id, question_id, statement, option_a, option_b, option_c, 
 
 def update_question(test_id, question_id, statement, option_a, option_b, option_c, option_d, correct_option):
 	db = get_db()
-	db.execute("UPDATE questions SET statement = ?, option_a = ?, option_b = ?, option_c = ?, option_d = ? WHERE test_id = ? AND question_id = ?", (statement, option_a, option_b, option_c, option_d, test_id, question_id))
+	db.execute("UPDATE questions SET statement = ?, option_a = ?, option_b = ?, option_c = ?, option_d = ?, correct_option = ? WHERE test_id = ? AND question_id = ?", (statement, option_a, option_b, option_c, option_d, correct_option, test_id, question_id))
 	db.commit()
 
 	
 def update_questions_count(test_id, prv_count):
 	db = get_db()
 	db.execute("UPDATE tests SET questions_count = ? WHERE id = ?", (prv_count + 1, test_id))
+	db.commit()
+
+
+def get_questions(test_id):
+	db = get_db()
+	questions = db.execute("SELECT * FROM questions WHERE test_id = ?", (test_id, ))
+	return questions
+	
+	
+def add_response(test_id, question_id, student_id, marked_option):
+	db = get_db()
+	db.execute("INSERT INTO responses(test_id, question_id, student_id, marked_option) VALUES(?, ?, ?, ?)", (test_id, question_id, student_id, marked_option))
+	db.commit()
+	
+	
+def add_score(test_id, student_id, score):
+	db = get_db()
+	db.execute("INSERT INTO results(test_id, student_id, score) VALUES (?, ?, ?)", (test_id, student_id, score))
 	db.commit()
