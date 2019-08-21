@@ -42,6 +42,9 @@ def tests():
 @login_admin_required
 def edit_test(test_id):
 	test = get_test(test_id)
+	if test is None:
+		print("Invalid test: {}".format(test_id))
+		return redirect(url_for("test.tests"))
 	if request.method == "POST":
 		name = request.form["name"]
 		start_time = request.form["start_time"]
@@ -56,8 +59,14 @@ def edit_test(test_id):
 @bp.route("/test/<int:test_id>/question/<int:question_id>/", methods = ("GET", "POST"))
 @login_admin_required
 def test(test_id, question_id):
-	question = get_question(test_id, question_id)
 	test = get_test(test_id)
+	if test is None:
+		print("Invalid test: {}".format(test_id))
+		return redirect(url_for(test.tests))
+	question = get_question(test_id, question_id)
+	if question is None:
+		print("Invalid question: {} of test: {}".format(question_id, test_id))
+		return redirect(url_for("test.tests"))
 	is_new_question = (question_id == test["questions_count"] + 1)
 	print(is_new_question)
 	if request.method == "POST":
@@ -83,8 +92,11 @@ def test(test_id, question_id):
 @bp.route("/test/<int:test_id>/", methods = ("GET", "POST"))
 @login_student_required
 def test_student(test_id):
-	questions = get_questions(test_id)
 	test = get_test(test_id)
+	if test is None:
+		print("Invalid test: {}".format(test_id))
+		return redirect(url_for("test.tests"))
+	questions = get_questions(test_id)
 	if request.method == "POST":
 		score = 0
 		for question_id in range(1, test["questions_count"] + 1):

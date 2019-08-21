@@ -10,7 +10,7 @@ def login_admin_required(view):
 	def wrapped_view(**kwargs):
 		if "type" not in session:
 			flash("Login Required")
-			return redirect(url_for("login"))
+			return redirect(url_for("auth.login"))
 		elif session["type"] != "admin":
 			flash("Not accessible")
 			return redirect(url_for("test.tests"))
@@ -24,7 +24,7 @@ def login_student_required(view):
 	def wrapped_view(**kwargs):
 		if "type" not in session:
 			flash("Login Required")
-			return redirect(url_for("login"))
+			return redirect(url_for("auth.login"))
 		elif session["type"] != "student":
 			flash("Not Accessible")
 			return redirect(url_for("test.tests"))
@@ -49,7 +49,7 @@ def logged_out_required(view):
 	def wrapped_view(**kwargs):
 		if "name" in session:
 			flash("Not Accessible")
-			return redirect(url_for("tests.tests"))
+			return redirect(url_for("test.tests"))
 		else:
 			return view(**kwargs)
 	return wrapped_view
