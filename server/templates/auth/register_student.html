@@ -3,12 +3,15 @@
 {% block title %}Register Student{% endblock %}
 
 {% block content %}
-	Please fill out the following information:<br>
+	<br><br>
+	<center><h1>Register Student</h1></center>
+	<br>
+	<h3>Please fill out the following information:</h3>
 	<form method = "POST">
-		Name: <input type = "text" name = "name" required><br>
-		Roll Number: <input type = "text" name = "roll_number" required><br>
-		Phone Number: <input type = "text" name = "phone_number" required><br>
-		Password: <input type = "password" name = "password" required><br>
+		<i>Name:</i> <input type = "text" name = "name" required><br>
+		<i>Roll Number:</i> <input type = "text" name = "roll_number" required><br>
+		<i>Phone Number:</i> <input type = "text" name = "phone_number" required><br>
+		<i>Password:</i> <input type = "password" name = "password" required><br>
 		<input type = "submit" value = "Submit">
 	</form>
 {% endblock %}

@@ -3,12 +3,13 @@
 {% block title %}Create test{% endblock %}
 
 {% block content %}
-	Please fill out the following data to create a test:<br>
+	<h3>Please fill out the following data to create a test:</h3>
+	<br>
 	
 	<form method = "POST">
-		Test name: <input type = "text" name = "name" required><br>
-		Start time: <input type = "datetime-local" name = "start_time" required><br>
-		Duration: <input type = "time" name = "duration" required><br>
+		<i>Test name:</i> <input type = "text" name = "name" required><br>
+		<i>Start time:</i> <input type = "datetime-local" name = "start_time" required><br>
+		<i>Duration:</i> <input type = "time" name = "duration" required><br>
 		<input type = "submit" value = "Create Test">
 	</form>
 {% endblock %}

@@ -4,7 +4,7 @@
 
 {% block content %}
 	<center><h3>Q. {{ question_id }}</h3><br></center>
-	<form method = "POST">
+	<form method = "POST" id = "form_1">
 		<i>Statement:</i> <textarea name = "statement" cols = "30" rows = "10">{{ question['statement'] }}</textarea>
 		
 		<i>Option A:</i> <input type = "text" name = "option_a" value = "{{ question['option_a'] }}" required><br>
@@ -21,17 +21,18 @@
 			{% endif %}
 		{% endfor %}
 		<br>
-		
-		{% if question_id <= test["questions_count"] %}
-			<input type = "submit" value = "Edit">
-		{% elif question_id == test["questions_count"] + 1 %}
-			<input type = "submit" value = "Create">
-		{% endif %}
-		<br>
 	</form>
+	{% if question_id <= test["questions_count"] %}
+		<button type = "submit" form = "form_1" value = "Edit">Edit</button>
+	{% elif question_id == test["questions_count"] + 1 %}
+		<button type = "submit" form = "form_1" value = "Create">Create</button>
+	{% endif %}
+	<br>
 	{% if question_id < test["questions_count"] %}
-		<a href = "{{ url_for('test.test', test_id = test['id'], question_id = question_id + 1) }}">Next Question</a><br>
-	{% elif question_id == test["questions_count"] %}
-		<a href = "{{ url_for('test.test', test_id = test['id'], question_id = question_id + 1) }}">Create Question</a><br>
+		<a href = "{{ url_for('test.test', test_id = test['id'], question_id = question_id + 1) }}"><input type = "submit" value = "Next Question"></a>
+		<a href = "{{ url_for('test.test', test_id = test['id'], question_id = test['questions_count']) }}"><input type = "submit" value = "Go To Last"></a>
+	{% endif %}
+	{% if question_id <= test["questions_count"] %}
+		<td><a href = "{{ url_for('test.test', test_id = test['id'], question_id = test['questions_count'] + 1) }}"><input type = "submit" value = "Create Question"></a>
 	{% endif %}
 {% endblock %}

@@ -1,9 +1,12 @@
 from flask import Blueprint, render_template, request, redirect, url_for, session
 from server.db_interact import *
+from server.auth import login_admin_required, login_student_required, logged_in_required
+import re
 
 bp = Blueprint("test", __name__)
 
 @bp.route("/create_test/", methods = ("GET", "POST"))
+@login_admin_required
 def create_test():
 	if request.method == "POST":
 		name = request.form["name"]
@@ -17,12 +20,26 @@ def create_test():
 		
 
 @bp.route("/tests/")
+@logged_in_required
 def tests():
-	all_tests = get_all_tests()
+	tests_table = get_all_tests()
+	all_tests = []
+	for test in tests_table:
+		to_add = {
+			"id": test["id"],
+			"name": test["name"],
+			"start_time": test["start_time"],
+			"duration": test["duration"]
+		}
+		prv = re.split("-|T|:", to_add["start_time"])
+		to_add["start_day"] = str(prv[2]) + "/" + str(prv[1]) + "/" + str(prv[0])
+		to_add["start_time"] = str(prv[3]) + ":" + str(prv[4])
+		all_tests += [to_add]
 	return render_template("test/tests.html", all_tests = all_tests)
 	
 	
 @bp.route("/edit_test/<int:test_id>/", methods = ("GET", "POST"))
+@login_admin_required
 def edit_test(test_id):
 	test = get_test(test_id)
 	if request.method == "POST":
@@ -37,6 +54,7 @@ def edit_test(test_id):
 		
 
 @bp.route("/test/<int:test_id>/question/<int:question_id>/", methods = ("GET", "POST"))
+@login_admin_required
 def test(test_id, question_id):
 	question = get_question(test_id, question_id)
 	test = get_test(test_id)
@@ -63,6 +81,7 @@ def test(test_id, question_id):
     
 
 @bp.route("/test/<int:test_id>/", methods = ("GET", "POST"))
+@login_student_required
 def test_student(test_id):
 	questions = get_questions(test_id)
 	test = get_test(test_id)
