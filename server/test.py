@@ -110,3 +110,28 @@ def test_student(test_id):
 		return redirect(url_for("test.tests"))
 	else:
 		return render_template("test/test_student.html", questions = questions, test = test)
+    
+
+@bp.route("/standings/<int:test_id>/")
+@logged_in_required
+def standings(test_id):
+	test = get_test(test_id)
+	if test is None:
+		return redirect(url_for("test.tests"))
+	result_table = get_results(test_id)
+	counter, max_score = 1, -1
+	results = []
+	for student in result_table:
+		to_add = {
+			"roll_number": student["roll_number"],
+			"name": student["name"],
+			"score": student["score"]
+		}
+		if max_score == -1:
+			max_score = student["score"]
+		elif max_score > student["score"]:
+			counter += 1
+			max_score = student["score"]
+		to_add["position"] = counter
+		results += [to_add]
+	return render_template("test/standings.html", results = results, test = test)

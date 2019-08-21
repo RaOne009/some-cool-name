@@ -98,3 +98,9 @@ def add_score(test_id, student_id, score):
 	db = get_db()
 	db.execute("INSERT INTO results(test_id, student_id, score) VALUES (?, ?, ?)", (test_id, student_id, score))
 	db.commit()
+  
+
+def get_results(test_id):
+	db = get_db()
+	results = db.execute("SELECT * FROM results JOIN students ON results.student_id = students.id WHERE test_id = ? ORDER BY score DESC ", (test_id, )).fetchall()
+	return results
